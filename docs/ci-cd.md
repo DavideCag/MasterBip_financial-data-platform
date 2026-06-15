@@ -21,6 +21,8 @@ We designed a multi-stage CI/CD pipeline using GitHub Actions.
 - Matrix build (multiple OS and configurations)
 - Dependency caching
 - Artifact sharing between workflows
+- Static analysis of the code
+- Final summary generation on GitHub
 
 ## Motivation
 
