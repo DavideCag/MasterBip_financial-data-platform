@@ -35,10 +35,8 @@ jobs:
     - name: Configure and Build
       run: |
         cd cpp-engine
-        mkdir build
-        cd build
-        cmake ..
-        make
+        cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+        cmake --build build --config ${{ matrix.build_type }}
 
     - name: Run Tests 
       working-directory: cpp-engine/build/
