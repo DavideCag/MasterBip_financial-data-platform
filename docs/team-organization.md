@@ -3,6 +3,7 @@
 The project was developed by a team of 4 simulating an enterprise structure.
 
 ## Roles
+![Team roles](/docs/Exercise_role.png)
 
 ### Project Manager / Tech Lead (1 person)
 - defined architecture and project structure
@@ -25,5 +26,5 @@ The project was developed by a team of 4 simulating an enterprise structure.
 
 - GitHub used for version control and division of tasks in branches
 - Pull Requests for code review
-- Issues used for task tracking, task reviewing and branches creation
-
+- Issues used for task tracking
+![Task tracking](/docs/Task_tracking.png)

@@ -19,7 +19,18 @@ def validate_report(filepath):
     # TODO_WORKSHOP: Rule 0: Strict Schema Validation
     # The JSON MUST contain exactly these keys: "count", "invalid_lines", "total", "average", "min", "max".
     # If any key is missing, or if extra keys exist, append an error and STOP validation.
+    expected_keys = {"count", "invalid_lines", "total", "average", "min", "max"}
+    actual_keys = set(data.keys())
 
+    if actual_keys != expected_keys:
+        errors.append(
+            f"Invalid schema: expected keys {expected_keys}, got {actual_keys}"
+        )
+        print("FAIL: Validation errors found:")
+        for e in errors:
+            print(f" - {e}")
+        return False  # STOP validation immediately
+    
     # Rule 1: Count
     if data.get("count", 0) <= 0:
         errors.append("count must be greater than 0")
@@ -30,11 +41,19 @@ def validate_report(filepath):
         errors.append("average cannot be greater than max")
         
     # TODO_WORKSHOP: Rule 3: Add check: 'min' cannot be greater than 'average'
+    if data.get("min", 0) > avg:
+        errors.append(f"min ({data['min']}) cannot be greater than average ({avg})")
 
     # TODO_WORKSHOP: Rule 4: Mathematical Consistency
     # Check that (count * average) is almost equal to total.
     # Hint: Use a small epsilon (e.g., 0.01) for floating-point comparison, don't use '=='!
-
+    epsilon = 0.01
+    if abs(data["count"] * data["average"] - data["total"]) > epsilon:
+        errors.append(
+            f"Inconsistent math: count * average != total "
+            f"({data['count']} * {data['average']} != {data['total']})"
+        )
+        
     if errors:
         print("FAIL: Validation errors found:")
         for e in errors:
