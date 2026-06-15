@@ -51,11 +51,10 @@ jobs:
 
     # Generate JSON
     - name: Generate report
-      if: 
       run: |
         cd cpp-engine
         if [ "$RUNNER_OS" == "Windows" ]; then
-          ./build/engine.exe ../data/transactions.csv > report.json
+          ./build/${{ matrix.build_type }}/engine.exe ../data/transactions.csv > report.json
         else
           ./build/engine ../data/transactions.csv > report.json
         fi
@@ -63,7 +62,6 @@ jobs:
 
     #summary 
     - name: Summary
-      if: always()
       run: |
         echo "✅ C++ Pipeline Result" >> $GITHUB_STEP_SUMMARY
         echo "OS: ${{ matrix.os }}" >> $GITHUB_STEP_SUMMARY
