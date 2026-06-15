@@ -56,7 +56,7 @@ TEST_F(ProcessorTest, HandlesMalformedStrings) {
     
     p.ProcessLine("1,ABC");
 
-    auto r = p.GetReport();
+    r = p.GetReport();
 
     ASSERT_EQ(r.invalid_lines, 1) <<  "Report must not have valid lines";
 }
