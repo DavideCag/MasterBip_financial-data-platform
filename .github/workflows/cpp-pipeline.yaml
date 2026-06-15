@@ -41,11 +41,34 @@ jobs:
         make
 
     - name: Run Tests 
-      working-directory: build/
+      working-directory: cpp-engine/build/
       run: ctest --output-on-failure
+
+
+        
+    # Static analysis
+    - name: Run clang-tidy
+      if: runner.os == 'Linux'
+      continue-on-error: true
+      run: |
+        clang-tidy cpp-engine/src/*.cpp -p cpp-engine/build || true
+
+
 
     # Generate JSON
     - name: Generate report
       run: |
         cd cpp-engine
         ./build/engine ../data/transactions.csv > report.json
+       
+
+    
+
+    #summary 
+    - name: Summary
+      if: always()
+      run: |
+        echo "✅ C++ Pipeline Result" >> $GITHUB_STEP_SUMMARY
+        echo "OS: ${{ matrix.os }}" >> $GITHUB_STEP_SUMMARY
+        echo "Build: ${{ matrix.build_type }}" >> $GITHUB_STEP_SUMMARY
+        echo "Status: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
