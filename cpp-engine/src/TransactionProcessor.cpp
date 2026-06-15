@@ -33,6 +33,9 @@ void TransactionProcessor::ProcessLine(const std::string& line) {
 
             // TODO_WORKSHOP: Implement logic to track the minimum amount correctly.
             // Hint: Be careful when initializing min.
+            if (current_report.count == 1 || amount < current_report.min) {
+                current_report.min = amount;
+            }
 
         } catch (...) {
             // TODO_WORKSHOP: If stod fails (e.g. invalid string), increment invalid_lines.
