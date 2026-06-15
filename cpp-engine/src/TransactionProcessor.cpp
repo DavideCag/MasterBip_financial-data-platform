@@ -16,8 +16,7 @@ void TransactionProcessor::ProcessLine(const std::string& line) {
         try {
             double amount = std::stod(amount_str);
             
-            // TODO_WORKSHOP: Implement Business Rule: Amounts MUST be strictly greater than 0.
-            // If amount <= 0, increment invalid_lines and return early.
+
             if (amount <= 0) {
                 current_report.invalid_lines++;
                 return;
@@ -39,9 +38,11 @@ void TransactionProcessor::ProcessLine(const std::string& line) {
 
         } catch (...) {
             // TODO_WORKSHOP: If stod fails (e.g. invalid string), increment invalid_lines.
+            current_report.invalid_lines++;
         }
     } else {
         // TODO_WORKSHOP: If line doesn't have a comma, increment invalid_lines.
+        current_report.invalid_lines++;
     }
 }
 
