@@ -2,12 +2,13 @@ name: Python CI Pipeline
  
 on:
   push:
-    branches: [main, develop]
+    branches: ["main", "3-github-action-cicd-pipeline"]
     paths:
       - "python-validator/**"
       - ".github/workflows/py_pipeline.yaml"
   pull_request:
     branches: [main]
+    types: [opened, synchronize, reopened]
  
 jobs:
   python-validate-test:
