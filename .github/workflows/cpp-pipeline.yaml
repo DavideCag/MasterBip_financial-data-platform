@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches: [ "main", "3-github-action-cicd-pipeline" ]
-    paths: ["cpp-engine/**", '.github/workflows/**']
+    paths: ["cpp-engine/**", '.github/workflows/cpp-pipeline.yml']
   pull_request:
     branches: [ "main"  ]
     types: [opened, synchronize, reopened]
