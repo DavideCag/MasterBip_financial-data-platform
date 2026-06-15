@@ -1,0 +1,51 @@
+name: CI/CD C++ Module
+
+on:
+  push:
+    branches: [ "main", "3-github-action-cicd-pipeline" ]
+    paths: ["cpp-engine/**", '.github/workflows/cpp-pipeline.yml']
+  pull_request:
+    branches: [ "main"  ]
+    types: [opened, synchronize, reopened]
+
+jobs:
+  cpp-build-test:
+    name: C++ Build & Test (${{ matrix.os }} - ${{ matrix.build_type }})
+    runs-on: ${{ matrix.os }}
+ 
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        build_type: [Release, Debug]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Cache CMake deps
+    - name: Cache dependencies
+      uses: actions/cache@v3
+      with:
+        path: cpp-engine/build/_deps
+        key: ${{ runner.os }}-cmake-${{ hashFiles('**/CMakeLists.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-cmake-
+
+    - name: Configure and Build
+      run: |
+        cd cpp-engine
+        mkdir build
+        cd build
+        cmake ..
+        make
+
+    - name: Run Tests 
+      working-directory: build/
+      run: ctest --output-on-failure
+
+    # Generate JSON
+    - name: Generate report
+      run: |
+        cd cpp-engine
+        ./build/engine ../data/transactions.csv > report.json
