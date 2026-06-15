@@ -41,8 +41,6 @@ jobs:
     - name: Run Tests 
       working-directory: cpp-engine/build/
       run: ctest --output-on-failure
-
-
         
     # Static analysis
     - name: Run clang-tidy
@@ -51,16 +49,15 @@ jobs:
       run: |
         clang-tidy cpp-engine/src/*.cpp -p cpp-engine/build || true
 
-
-
     # Generate JSON
     - name: Generate report
+      if: 
       run: |
         cd cpp-engine
-        ./build/engine ../data/transactions.csv > report.json
-       
-
-    
+        if [ "$RUNNER_OS" == "Windows" ]; then
+          ./build/engine.exe ../data/transactions.csv > report.json
+        else
+          ./build/engine ../data/transactions.csv > report.json
 
     #summary 
     - name: Summary
