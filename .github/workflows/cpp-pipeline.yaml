@@ -58,6 +58,8 @@ jobs:
           ./build/engine.exe ../data/transactions.csv > report.json
         else
           ./build/engine ../data/transactions.csv > report.json
+        fi
+      shell: bash
 
     #summary 
     - name: Summary
