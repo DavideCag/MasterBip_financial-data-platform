@@ -1,6 +1,5 @@
 name: CI/CD C++ Module
 
-# 
 on:
   workflow_dispatch:
   push:
@@ -9,10 +8,6 @@ on:
   pull_request:
     branches: [ "main"  ]
     types: [opened, synchronize, reopened]
-
-
-jobs:
-  
 
 jobs:
   cpp-build-test:
@@ -24,7 +19,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         build_type: [Release, Debug]
-        
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
