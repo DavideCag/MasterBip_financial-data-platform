@@ -30,3 +30,14 @@ This design mimics real-world CI/CD systems, ensuring:
 - automation
 - quality control
 - reproducibility
+
+
+## Flowchart
+```mermaid
+
+flowchart LR
+    A((Code Push)) --> B[Build]
+    B --> C[Test]
+    C -->|OK| D[Deploy]
+    C -->|Fail| A
+    D --> E((Production))

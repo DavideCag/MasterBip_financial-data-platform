@@ -5,11 +5,37 @@ The system is designed as a multi-language data processing pipeline.
 ## Flow
 
 CSV → C++ Engine → JSON → Python Validator → Final Output
+```mermaid
+flowchart LR
+
+    subgraph Data Layer
+        A[CSV Transactions]
+    end
+
+    subgraph Processing Layer
+        B[C++ Engine]
+        C[Aggregation & Metrics]
+    end
+
+    subgraph Validation Layer
+        D[JSON Output]
+        E[Python Validator]
+    end
+
+    subgraph Output Layer
+        F[Errors]
+    end
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+```
 
 ## Components
 
 ### C++ Engine
-- Responsible for high-performance data aggregation
 - Processes CSV input
 - Produces JSON report
 
