@@ -2,6 +2,9 @@ import pytest
 import json
 import os
 from validate import validate_report
+import sys
+ 
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 def create_temp_json(tmp_path, data):
     file_path = tmp_path / "test.json"
