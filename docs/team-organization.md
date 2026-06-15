@@ -4,24 +4,26 @@ The project was developed by a team of 4 simulating an enterprise structure.
 
 ## Roles
 
-### Project Manager / Tech Lead
+### Project Manager / Tech Lead (1 person)
 - defined architecture and project structure
-- coordinated development and reviews
+- coordinated development and reviews branches before merging
 
-### DevOps Engineer
+### DevOps Engineer (4 people divided in 2 sub-teams)
 - designed and implemented CI/CD pipelines
 - managed automation and artifact sharing
 
-### C++ Developer
+### C++ Developer (2 people)
 - implemented the transaction processing engine
 - handled performance and core logic
+- implemented test cases with ctest
 
-### Python Developer
+### Python Developer (2 people)
 - implemented validation logic
-- designed and executed tests
+- designed and executed tests with pytest
 
 ## Collaboration
 
-- GitHub used for version control
+- GitHub used for version control and division of tasks in branches
 - Pull Requests for code review
-- Issues used for task tracking
+- Issues used for task tracking, task reviewing and branches creation
+

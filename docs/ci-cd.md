@@ -28,3 +28,14 @@ This design mimics real-world CI/CD systems, ensuring:
 - automation
 - quality control
 - reproducibility
+
+
+## Flowchart
+```mermaid
+
+flowchart LR
+    A((Push / PR)) --> B[Build & Test C++]
+    B --> C[Generate report.json]
+    C --> D["(Artifact)"]
+    D --> E[Validate & Test Python]
+    E --> F([Done])
