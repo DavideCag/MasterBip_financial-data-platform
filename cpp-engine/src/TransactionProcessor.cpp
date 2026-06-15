@@ -5,17 +5,23 @@
 #include <limits>
 
 void TransactionProcessor::ProcessLine(const std::string& line) {
+    //skip empty line or header
     if (line.empty() || line.find("transaction_id") != std::string::npos) return;
 
     std::stringstream ss(line);
     std::string id_str, amount_str;
 
+    //check CSV format: transaction_id,amount
     if (std::getline(ss, id_str, ',') && std::getline(ss, amount_str, ',')) {
         try {
             double amount = std::stod(amount_str);
             
             // TODO_WORKSHOP: Implement Business Rule: Amounts MUST be strictly greater than 0.
             // If amount <= 0, increment invalid_lines and return early.
+            if (amount <= 0) {
+                current_report.invalid_lines++;
+                return;
+            }
 
             current_report.count++;
             current_report.total += amount;
@@ -38,6 +44,14 @@ void TransactionProcessor::ProcessLine(const std::string& line) {
 
 void TransactionProcessor::ProcessFile(const std::string& filepath) {
     std::ifstream file(filepath);
+
+    
+    if (!file.is_open()) {
+        std::cerr << "Error opening file: " << filepath << std::endl;
+        return;
+        }
+
+
     std::string line;
     while (std::getline(file, line)) {
         ProcessLine(line);
@@ -46,14 +60,18 @@ void TransactionProcessor::ProcessFile(const std::string& filepath) {
 
 Report TransactionProcessor::GetReport() const { return current_report; }
 
+
 std::string TransactionProcessor::GenerateJSON() const {
     std::stringstream ss;
+
     ss << "{\n";
     ss << "  \"count\": " << current_report.count << ",\n";
-    // TODO_WORKSHOP: Print "invalid_lines" and "min" to the JSON output.
+    ss << "  \"invalid_lines\": " << current_report.invalid_lines << ",\n";
     ss << "  \"total\": " << current_report.total << ",\n";
     ss << "  \"average\": " << current_report.average << ",\n";
-    ss << "  \"max\": " << current_report.max << "\n";
+    ss << "  \"max\": " << current_report.max << ",\n";
+    ss << "  \"min\": " << current_report.min << "\n";
     ss << "}\n";
+
     return ss.str();
 }
