@@ -34,8 +34,8 @@ This design mimics real-world CI/CD systems, ensuring:
 ```mermaid
 
 flowchart LR
-    A((Push / PR)) --> B[Build & Test C++]
-    B --> C[Generate report.json]
-    C --> D["(Artifact)"]
-    D --> E[Validate & Test Python]
-    E --> F([Done])
+    A((Code Push)) --> B[Build]
+    B --> C[Test]
+    C -->|OK| D[Deploy]
+    C -->|Fail| A
+    D --> E((Production))
