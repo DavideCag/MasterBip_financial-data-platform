@@ -9,7 +9,6 @@ CSV → C++ Engine → JSON → Python Validator → Final Output
 ## Components
 
 ### C++ Engine
-- Responsible for high-performance data aggregation
 - Processes CSV input
 - Produces JSON report
 
