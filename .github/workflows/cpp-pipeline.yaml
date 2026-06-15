@@ -41,8 +41,6 @@ jobs:
     - name: Run Tests 
       working-directory: cpp-engine/build/
       run: ctest --output-on-failure
-
-
         
     # Static analysis
     - name: Run clang-tidy
@@ -51,20 +49,19 @@ jobs:
       run: |
         clang-tidy cpp-engine/src/*.cpp -p cpp-engine/build || true
 
-
-
     # Generate JSON
     - name: Generate report
       run: |
         cd cpp-engine
-        ./build/engine ../data/transactions.csv > report.json
-       
-
-    
+        if [ "$RUNNER_OS" == "Windows" ]; then
+          ./build/${{ matrix.build_type }}/engine.exe ../data/transactions.csv > report.json
+        else
+          ./build/engine ../data/transactions.csv > report.json
+        fi
+      shell: bash
 
     #summary 
     - name: Summary
-      if: always()
       run: |
         echo "✅ C++ Pipeline Result" >> $GITHUB_STEP_SUMMARY
         echo "OS: ${{ matrix.os }}" >> $GITHUB_STEP_SUMMARY
